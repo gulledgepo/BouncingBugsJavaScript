@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--Paxston Gulledge, PRG250, Assignment 3, August 30, 2017
+Bounces 5 bugs around the screen -->
+<title>Bugs</title>
+<meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+<script type="text/javascript">
+/* <![CDATA[ */
+
+	//These are our global variables, speed is same for all, and we set different starting positions to make it look random
+	var bounceSpeed = 5;
+	var widthMax = 0;
+	var heightMax = 0;
+	var xPosition = new Array(0, 46, 600, 200, 1125);
+	var yPosition = new Array(0, 400, 580, 890, 400);
+	var xDirection = new Array("right", "left", "left", "right", "right");
+	var yDirection = new Array("down", "up", "down", "up", "down");
+	var bugBounce;
+		
+	function setBug() 
+	{
+		//Our initial setbug, changes when window is resized, sets to the current dimensions of the window and starts over the bounce
+		widthMax = window.innerWidth-14;
+		heightMax = window.innerHeight;
+		clearTimeout(bugBounce);
+		bounceBug();
+	}	
+	
+	function bounceBug() 
+	{
+		//Our for loop, goes through the arrays of the 5 bugs and updates them once per call
+		for (var i = 0; i < 5; i++) 
+		{
+			if (xDirection[i] == "right" && xPosition[i] > (widthMax - document.getElementById("bugImage" + i).width
+			- bounceSpeed))
+				xDirection[i] = "left";
+			else if (xDirection[i] == "left" && xPosition[i] < (0 + bounceSpeed))
+				xDirection[i] = "right";
+			if (yDirection[i] == "down" && yPosition[i] > (heightMax - document.getElementById("bugImage" + i).height
+			- bounceSpeed))
+				yDirection[i] = "up";
+			else if (yDirection[i] == "up" && yPosition[i] < (0 + bounceSpeed))
+				yDirection[i] = "down";
+			if (xDirection[i] == "right")
+				xPosition[i] = xPosition[i] + bounceSpeed;
+			else if (xDirection[i] == "left")
+				xPosition[i] = xPosition[i] - bounceSpeed;
+			else
+				xPosition[i] = xPosition[i];
+			if (yDirection[i] == "down")
+				yPosition[i] = yPosition[i] + bounceSpeed;
+			else if (yDirection[i] == "up")
+				yPosition[i] = yPosition[i] - bounceSpeed;
+			else
+				yPosition[i] = yPosition[i];
+				
+			document.getElementById("bug" + i).style.left = xPosition[i] + "px";
+			document.getElementById("bug" + i).style.top = yPosition[i] + "px";
+
+
+		}
+					clearTimeout(bugBounce);
+					//Code doesn't have individual set interval or set timeout, but that would only be necessary
+					//if we were repeating code to call different functions
+					//everything is done within 1 function
+					setTimeout('bounceBug()', 30);
+	}
+	
+	window.onresize = setBug();
+	
+/* ]]> */
+</script>
+</head>
+
+
+<body onload="setBug()">
+	<div id="bug0"
+	style="position:absolute; left:100px;top:0px">
+	<img id="bugImage0" src="bug.gif" alt ="Image of a bug" height="48" width="48" />
+	</div>
+	<div id="bug1"
+	style="position:absolute; left:200px;top:0px">
+	<img id="bugImage1" src="bug.gif" alt ="Image of a bug" height="48" width="48" />
+	</div>
+	<div id="bug2"
+	style="position:absolute; left:300px;top:0px">
+	<img id="bugImage2" src="bug.gif" alt ="Image of a bug" height="48" width="48" />
+	</div>
+	<div id="bug3"
+	style="position:absolute; left:400px;top:0px">
+	<img id="bugImage3" src="bug.gif" alt ="Image of a bug" height="48" width="48" />
+	</div>
+	<div id="bug4"
+	style="position:absolute; left:500px;top:0px">
+	<img id="bugImage4" src="bug.gif" alt ="Image of a bug" height="48" width="48" />
+	</div>
+</body>
+
+</html>
